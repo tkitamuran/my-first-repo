@@ -26,13 +26,10 @@ GitやGitHubの様々な操作を試すために自由に使う
  - feature/loginブランチ作成
  - ブランチ更新
 
-<<<<<<< HEAD
 3. Branch２回目
 
  - feature/login2ブランチ作成
  - コンフリクト
-=======
 3. Branch2回目
 
  - feature/login2ブランチ作成
->>>>>>> feature/login2
