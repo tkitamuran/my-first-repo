@@ -15,6 +15,7 @@ secrets/
 certs/
 
 # Build outputs
+node_modules/
 dist/
 build/
 out/
