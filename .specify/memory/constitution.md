@@ -1,50 +1,107 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+同期影響レポート
+- バージョン変更: 未制定（テンプレート） → 1.0.0
+- 変更した原則:
+  - 未定義 → I. 日本語による一貫したコミュニケーション
+  - 未定義 → II. 保守可能なコード品質
+  - 未定義 → III. リスクに基づくテスト（必須）
+  - 未定義 → IV. 一貫したユーザー体験
+  - 未定義 → V. 測定可能なパフォーマンス
+- 追加したセクション:
+  - 技術判断の基準
+  - 開発ワークフローと品質ゲート
+- 削除したセクション: なし
+- 更新したテンプレート:
+  - ✅ .specify/templates/plan-template.md
+  - ✅ .specify/templates/spec-template.md
+  - ✅ .specify/templates/tasks-template.md
+  - ✅ .specify/templates/checklist-template.md
+  - ✅ .specify/workflows/speckit/workflow.yml
+- 確認済み（変更不要）:
+  - ✅ .specify/templates/commands/*.md（ディレクトリなし）
+  - ✅ README.md
+  - ✅ AGENTS.md
+- 保留事項: なし
+-->
+# my-first-repo プロジェクト憲章
 
-## Core Principles
+## 基本原則
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 日本語による一貫したコミュニケーション
+仕様書、計画書、タスク、チェックリスト、レビュー結果、設計判断、運用手順、
+利用者向け説明は、すべて日本語で作成しなければならない（MUST）。コード識別子、
+外部仕様の固有名詞、コマンド、API 名など、翻訳により正確性が失われる要素は原文を
+併記または維持してよい。文書間で同じ概念には同じ用語を使い、略語は初出時に説明する。
+これにより、判断の追跡可能性とチーム内の共通理解を維持する。
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. 保守可能なコード品質
+実装は単一責任、明確な命名、最小限の重複、明示的なエラー処理を満たさなければならない
+（MUST）。公開インターフェースと複雑な判断には、目的と制約が分かる日本語の文書または
+コメントを付ける。静的解析、フォーマッター、型検査などプロジェクトで採用した自動検査は
+変更前後で成功しなければならない。複雑性や新規依存関係を追加する場合は、より単純な案を
+採用できない理由、保守コスト、移行・撤回方法を計画書に記録する。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. リスクに基づくテスト（必須）
+すべての振る舞いの変更は、実装前または実装と同時に、失敗を再現し要件を検証する自動テストを
+持たなければならない（MUST）。単体テストを基本とし、コンポーネント間契約、永続化、外部連携、
+重要な利用者フローには統合テストまたはエンドツーエンドテストを追加する。障害修正には再発防止
+テストを必須とする。テストを省略できるのは文書のみの変更など実行時挙動に影響しない場合に限り、
+理由と代替検証をレビューに記録する。テストは決定的で、独立実行でき、失敗原因を特定できること。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. 一貫したユーザー体験
+同じ操作、用語、表示状態、エラー表現は、画面や機能をまたいで一貫していなければならない
+（MUST）。各仕様は主要な利用者フローに加え、空状態、読込中、成功、入力誤り、権限不足、
+回復可能な障害を定義する。既存のデザインパターンとアクセシビリティ要件を再利用し、キーボード
+操作、読みやすさ、適切なフィードバックを検証する。意図的な不一致には、利用者価値と移行方針を
+計画書で説明する。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. 測定可能なパフォーマンス
+利用者が待ち時間を認識する主要操作には、対象環境、データ量、測定方法、応答時間または資源使用量
+の数値目標を仕様書で定めなければならない（MUST）。計画時に性能リスクと計測方法を決め、実装後に
+代表条件で測定する。回帰を検出できる自動ベンチマークまたは監視を、影響と維持コストに応じて採用する。
+目標を満たせない変更は、ボトルネック、利用者影響、緩和策、承認された例外を記録しない限りリリース
+してはならない。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## 技術判断の基準
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+技術・設計・実装の選択肢は、次の優先順で評価する。
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+1. 仕様で定義した利用者価値と安全性を満たすこと。
+2. 正しさを自動テストで継続的に検証できること。
+3. 既存のユーザー体験、用語、設計パターンとの一貫性を保つこと。
+4. 性能目標を代表条件で測定し、満たせること。
+5. 実装、運用、移行を含む総複雑性が最小であること。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+候補間に差がない場合は、既存技術の再利用、依存関係の少なさ、可逆性の高さを優先する。
+この順序に反する選択は、採用理由、却下した代替案、リスク、検証方法を計画書の
+「複雑性の追跡」に記録し、レビューで承認を得なければならない。
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+## 開発ワークフローと品質ゲート
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- 仕様書は実装に先立ち、優先順位付きの利用者シナリオ、検証可能な受入条件、対象外範囲、
+  UX 状態、性能目標を日本語で定義しなければならない。
+- 計画書はコード品質、テスト戦略、UX 一貫性、性能計測への対応を明示し、調査前と設計後に
+  憲章適合性を再確認しなければならない。
+- タスクは各要件と利用者シナリオへ追跡可能で、テスト作成、実装、UX 検証、性能検証、文書更新を
+  完了条件として含めなければならない。
+- レビューは要件適合性、回帰リスク、テストの妥当性、UX の一貫性、性能影響を確認する。
+  重大な未解決事項または品質ゲート失敗がある変更はマージしてはならない。
+- 完了とは、コードの実装だけでなく、必須検査の成功、受入条件の確認、必要文書の更新、既知の
+  制約と残存リスクの記録までを含む。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+## ガバナンス
+
+本憲章は、プロジェクト内の他の慣行や個別判断より優先する。すべての仕様、計画、タスク、レビューは
+本憲章への適合を確認しなければならない。違反が必要な場合は、範囲、理由、期間、所有者、解消計画を
+文書化し、変更の承認者による明示的な承認を得る。
+
+改定は、提案内容、影響を受ける成果物、移行計画を提示し、レビューを経て承認する。バージョンは
+セマンティックバージョニングに従い、原則の削除または互換性のない再定義は MAJOR、新原則や実質的な
+義務の追加は MINOR、意味を変えない明確化は PATCH とする。改定時は依存テンプレートと運用文書を同じ
+変更で同期し、同期影響レポートを憲章冒頭に残す。
+
+各機能の計画時とレビュー時に適合性を確認し、定期的にテンプレート、テスト、性能基準、UX パターンが
+憲章と一致しているか監査する。判断に迷う場合は「技術判断の基準」の上位項目を優先し、例外ではなく
+検証可能な根拠を残す。
+
+**バージョン**: 1.0.0 | **制定日**: 2026-09-28 | **最終改定日**: 2026-09-28
