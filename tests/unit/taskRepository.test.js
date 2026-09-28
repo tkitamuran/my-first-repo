@@ -72,6 +72,18 @@ describe('taskRepository', () => {
     })
   })
 
+  it('Storageの取得自体の例外を読込エラーへ変換する', () => {
+    const getStorage = () => {
+      throw new DOMException('blocked', 'SecurityError')
+    }
+
+    expect(createTaskRepository(getStorage).load()).toEqual({
+      ok: false,
+      tasks: [],
+      error: 'read_failed',
+    })
+  })
+
   it('version 1の保存文書を1回で保存する', () => {
     const storage = createMemoryStorage()
     const repository = createTaskRepository(storage)
@@ -96,5 +108,16 @@ describe('taskRepository', () => {
       error: 'write_failed',
     })
     expect(storage.getItem(TASK_STORAGE_KEY)).toBe(previous)
+  })
+
+  it('Storageの取得自体の例外を保存エラーへ変換する', () => {
+    const getStorage = () => {
+      throw new DOMException('blocked', 'SecurityError')
+    }
+
+    expect(createTaskRepository(getStorage).save(tasks)).toEqual({
+      ok: false,
+      error: 'write_failed',
+    })
   })
 })

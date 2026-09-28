@@ -195,4 +195,21 @@ describe('タスク削除', () => {
       expect(screen.getByRole('button', { name: '本を返すを削除' })).toHaveFocus(),
     )
   })
+
+  it('最後のタスクを削除した後はタスク入力欄へフォーカスを移す', async () => {
+    const { user } = renderApp({
+      initialLoad: {
+        ok: true,
+        tasks: [{ id: '1', title: '最後のタスク', completed: false }],
+      },
+    })
+
+    await user.click(screen.getByRole('button', { name: '最後のタスクを削除' }))
+    await user.click(screen.getByRole('button', { name: '削除する' }))
+
+    expect(screen.getByText('タスクがありません')).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.getByRole('textbox', { name: 'タスク名' })).toHaveFocus(),
+    )
+  })
 })

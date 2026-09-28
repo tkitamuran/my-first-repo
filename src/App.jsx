@@ -21,6 +21,7 @@ function App({ initialLoad = { ok: true, tasks: [] }, repository, idFactory }) {
     idFactory,
   })
   const deleteTriggerRef = useRef(null)
+  const taskInputRef = useRef(null)
 
   function restoreDeleteFocus(preferOriginal = true) {
     window.setTimeout(() => {
@@ -29,7 +30,13 @@ function App({ initialLoad = { ok: true, tasks: [] }, repository, idFactory }) {
         return
       }
 
-      document.querySelector('[data-delete-button]')?.focus()
+      const remainingDeleteButton = document.querySelector('[data-delete-button]')
+      if (remainingDeleteButton) {
+        remainingDeleteButton.focus()
+        return
+      }
+
+      taskInputRef.current?.focus()
     }, 0)
   }
 
@@ -58,7 +65,7 @@ function App({ initialLoad = { ok: true, tasks: [] }, repository, idFactory }) {
         <section className="composer" aria-labelledby="add-task-heading">
           <p className="eyebrow">NEW TASK</p>
           <h1 id="add-task-heading">今日やることを追加</h1>
-          <TaskForm onAdd={addTask} />
+          <TaskForm onAdd={addTask} inputRef={taskInputRef} />
         </section>
 
         <section aria-labelledby="tasks-heading">

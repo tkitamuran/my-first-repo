@@ -38,10 +38,12 @@ function isValidDocument(document) {
 }
 
 export function createTaskRepository(storage, key = TASK_STORAGE_KEY) {
+  const getStorage = typeof storage === 'function' ? storage : () => storage
+
   return {
     load() {
       try {
-        const storedValue = storage.getItem(key)
+        const storedValue = getStorage().getItem(key)
         if (storedValue === null) return { ok: true, tasks: [] }
 
         const document = JSON.parse(storedValue)
@@ -57,7 +59,7 @@ export function createTaskRepository(storage, key = TASK_STORAGE_KEY) {
       try {
         if (!isValidTasks(tasks)) throw new TypeError('Invalid tasks')
 
-        storage.setItem(key, JSON.stringify({ version: STORAGE_VERSION, tasks }))
+        getStorage().setItem(key, JSON.stringify({ version: STORAGE_VERSION, tasks }))
         return { ok: true }
       } catch {
         return { ok: false, error: 'write_failed' }

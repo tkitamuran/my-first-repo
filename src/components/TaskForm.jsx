@@ -5,7 +5,7 @@ const ERROR_MESSAGES = {
   too_long: 'タスク名は200文字以内で入力してください。',
 }
 
-function TaskForm({ onAdd }) {
+function TaskForm({ onAdd, inputRef }) {
   const [value, setValue] = useState('')
   const [error, setError] = useState(null)
   const errorId = 'task-title-error'
@@ -35,6 +35,7 @@ function TaskForm({ onAdd }) {
       <label htmlFor="task-title">タスク名</label>
       <div className="task-form-controls">
         <input
+          ref={inputRef}
           id="task-title"
           name="task-title"
           type="text"
